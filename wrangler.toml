@@ -1,8 +1,0 @@
-name = "amc-consulting"
-compatibility_date = "2024-03-15"
-
-[env.production]
-name = "amc-consulting"
-
-[[pages_build_output_dir]]
-directory = "."
