@@ -4,8 +4,688 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AMC - Advanced Management Consulting</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo h2 {
+            color: #d73527;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #666;
+            font-size: 0.9rem;
+            display: block;
+            margin-top: -5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #d73527;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 100px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .hero-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #d73527;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #b8291c;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #d73527;
+            border: 2px solid #d73527;
+        }
+
+        .btn-secondary:hover {
+            background: #d73527;
+            color: white;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-placeholder {
+            width: 400px;
+            height: 300px;
+            background: #d73527;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-placeholder:hover {
+            transform: scale(1.05);
+        }
+
+        /* Services Preview */
+        .services-preview {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .services-preview h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: #d73527;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .service-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-link {
+            color: #d73527;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .service-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Industries Section */
+        .industries-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .industries-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .industry-item {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: white;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .industry-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .industry-item i {
+            font-size: 3rem;
+            color: #d73527;
+            margin-bottom: 1rem;
+        }
+
+        .industry-item h4 {
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .values-list {
+            list-style: none;
+        }
+
+        .values-list li {
+            padding: 0.5rem 0;
+            color: #666;
+        }
+
+        .values-list strong {
+            color: #d73527;
+        }
+
+        .about-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .image-placeholder {
+            width: 350px;
+            height: 250px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #d73527;
+            border: 2px dashed #ddd;
+            transition: transform 0.3s ease;
+        }
+
+        .image-placeholder:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-placeholder p {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 5rem 0;
+            background: #333;
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: #d73527;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: #d73527;
+            margin-right: 1rem;
+            width: 30px;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d73527;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #d73527;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-section ul li a:hover {
+            color: #d73527;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #ccc;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .social-links a:hover {
+            color: #d73527;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: #d73527;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .page-header {
+            background: #f8f9fa;
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 3rem 0;
+        }
+
+        /* Alert styles */
+        .alert {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 120px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero-placeholder {
+                width: 300px;
+                height: 200px;
+                font-size: 3rem;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -17,13 +697,13 @@
                     <span>Advanced Management Consulting</span>
                 </div>
                 <ul class="nav-menu">
-                    <li><a href="#" class="nav-link active" data-section="home">Home</a></li>
-                    <li><a href="#" class="nav-link" data-section="about">About</a></li>
-                    <li><a href="#" class="nav-link" data-section="services">Services</a></li>
-                    <li><a href="#" class="nav-link" data-section="industries">Industries</a></li>
-                    <li><a href="#" class="nav-link" data-section="insights">Insights</a></li>
-                    <li><a href="#" class="nav-link" data-section="careers">Careers</a></li>
-                    <li><a href="#" class="nav-link" data-section="contact">Contact</a></li>
+                    <li><a class="nav-link active" data-section="home">Home</a></li>
+                    <li><a class="nav-link" data-section="about">About</a></li>
+                    <li><a class="nav-link" data-section="services">Services</a></li>
+                    <li><a class="nav-link" data-section="industries">Industries</a></li>
+                    <li><a class="nav-link" data-section="insights">Insights</a></li>
+                    <li><a class="nav-link" data-section="careers">Careers</a></li>
+                    <li><a class="nav-link" data-section="contact">Contact</a></li>
                 </ul>
                 <div class="hamburger">
                     <span class="bar"></span>
@@ -35,19 +715,19 @@
     </header>
 
     <!-- HOME SECTION -->
-    <section id="home-section" class="page-section">
+    <section id="home-section" class="page-section active">
         <!-- Hero Section -->
         <div class="hero fade-in">
             <div class="hero-content">
                 <h1>Building trust and solving important problems</h1>
                 <p>We help organizations and individuals create the value they're looking for, by delivering quality in assurance, advisory and tax services.</p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary" data-section="services">Our Services</a>
-                    <a href="#" class="btn btn-secondary" data-section="about">Learn More</a>
+                    <a class="btn btn-primary" data-section="services">Our Services</a>
+                    <a class="btn btn-secondary" data-section="about">Learn More</a>
                 </div>
             </div>
             <div class="hero-image">
-                <div class="hero-placeholder hover-lift">
+                <div class="hero-placeholder">
                     <i class="fas fa-chart-line"></i>
                 </div>
             </div>
@@ -58,44 +738,77 @@
             <div class="container">
                 <h2>Our Core Services</h2>
                 <div class="services-grid">
-                    <div class="service-card hover-lift">
+                    <div class="service-card">
                         <div class="service-icon">
                             <i class="fas fa-shield-alt"></i>
                         </div>
                         <h3>Assurance</h3>
                         <p>Building trust and confidence through reliable audit and assurance services.</p>
-                        <a href="#" class="service-link" data-section="services">Learn more</a>
+                        <a class="service-link" data-section="services">Learn more</a>
                     </div>
-                    <div class="service-card hover-lift">
+                    <div class="service-card">
                         <div class="service-icon">
                             <i class="fas fa-lightbulb"></i>
                         </div>
                         <h3>Advisory</h3>
                         <p>Strategic consulting to help you navigate complex business challenges.</p>
-                        <a href="#" class="service-link" data-section="services">Learn more</a>
+                        <a class="service-link" data-section="services">Learn more</a>
                     </div>
-                    <div class="service-card hover-lift">
+                    <div class="service-card">
                         <div class="service-icon">
                             <i class="fas fa-calculator"></i>
                         </div>
                         <h3>Tax Services</h3>
                         <p>Comprehensive tax planning and compliance solutions for your business.</p>
-                        <a href="#" class="service-link" data-section="services">Learn more</a>
+                        <a class="service-link" data-section="services">Learn more</a>
                     </div>
-                    <div class="service-card hover-lift">
+                    <div class="service-card">
                         <div class="service-icon">
                             <i class="fas fa-laptop-code"></i>
                         </div>
                         <h3>Digital Transformation</h3>
                         <p>Leveraging technology to drive innovation and business growth.</p>
-                        <a href="#" class="service-link" data-section="services">Learn more</a>
+                        <a class="service-link" data-section="services">Learn more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Industries Section -->
+        <div class="industries-section">
+            <div class="container">
+                <h2>Industries We Serve</h2>
+                <div class="industries-grid">
+                    <div class="industry-item">
+                        <i class="fas fa-building"></i>
+                        <h4>Financial Services</h4>
+                    </div>
+                    <div class="industry-item">
+                        <i class="fas fa-industry"></i>
+                        <h4>Manufacturing</h4>
+                    </div>
+                    <div class="industry-item">
+                        <i class="fas fa-heartbeat"></i>
+                        <h4>Healthcare</h4>
+                    </div>
+                    <div class="industry-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h4>Retail</h4>
+                    </div>
+                    <div class="industry-item">
+                        <i class="fas fa-microchip"></i>
+                        <h4>Technology</h4>
+                    </div>
+                    <div class="industry-item">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Energy</h4>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Stats Section -->
-        <div class="stats-section section">
+        <div class="stats-section">
             <div class="container">
                 <div class="stats-grid">
                     <div class="stat-item">
@@ -120,7 +833,7 @@
     </section>
 
     <!-- ABOUT SECTION -->
-    <section id="about-section" class="page-section section-hidden">
+    <section id="about-section" class="page-section">
         <div class="page-header">
             <div class="container">
                 <h1>About AMC</h1>
@@ -128,420 +841,9 @@
             </div>
         </div>
 
-        <div class="about-section section">
+        <div class="about-section">
             <div class="container">
                 <div class="about-content">
                     <div class="about-text">
                         <h2>Our Purpose</h2>
-                        <p>At AMC, our purpose is to build trust in society and solve important problems. We're a community of solvers combining human ingenuity, experience, technology and products to help organizations create value.</p>
-                        
-                        <h3>Our Values</h3>
-                        <ul class="values-list">
-                            <li><strong>Integrity:</strong> We act with integrity and speak up for what's right</li>
-                            <li><strong>Excellence:</strong> We make a difference by consistently delivering quality</li>
-                            <li><strong>Collaboration:</strong> We work together and embrace diverse perspectives</li>
-                            <li><strong>Innovation:</strong> We reimagine what's possible and create solutions</li>
-                            <li><strong>Leadership:</strong> We take responsibility and lead by example</li>
-                        </ul>
-                    </div>
-                    <div class="about-image">
-                        <div class="image-placeholder hover-lift">
-                            <i class="fas fa-users"></i>
-                            <p>Our Global Team</p>
-                        </div>
-                    </div>
-                </div>
-
-                <h2 style="text-align: center; margin-top: 4rem; margin-bottom: 3rem;">Our Leadership</h2>
-                <div class="leadership-grid">
-                    <div class="leader-card">
-                        <div class="leader-image">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h4>John Smith</h4>
-                        <p class="leader-title">Global Chairman</p>
-                        <p class="leader-bio">Leading AMC's global strategy with over 25 years of consulting experience.</p>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-image">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h4>Sarah Johnson</h4>
-                        <p class="leader-title">CEO</p>
-                        <p class="leader-bio">Driving innovation and operational excellence across all business units.</p>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-image">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h4>Michael Brown</h4>
-                        <p class="leader-title">Chief Strategy Officer</p>
-                        <p class="leader-bio">Shaping the future of professional services and digital transformation.</p>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-image">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h4>Emily Davis</h4>
-                        <p class="leader-title">Chief Technology Officer</p>
-                        <p class="leader-bio">Leading technology innovation and digital solutions development.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SERVICES SECTION -->
-    <section id="services-section" class="page-section section-hidden">
-        <div class="page-header">
-            <div class="container">
-                <h1>Our Services</h1>
-                <p>Comprehensive solutions to help your business thrive in today's complex environment</p>
-            </div>
-        </div>
-
-        <div class="service-details">
-            <div class="container">
-                <div class="service-detail">
-                    <div class="service-detail-content">
-                        <div class="service-detail-text">
-                            <h3><i class="fas fa-shield-alt"></i> Assurance</h3>
-                            <p>Building trust and confidence through reliable audit and assurance services that help stakeholders make informed decisions.</p>
-                            <h4>Key Offerings:</h4>
-                            <ul>
-                                <li>Financial Statement Audit</li>
-                                <li>Internal Audit Services</li>
-                                <li>Risk Assessment</li>
-                                <li>Compliance Testing</li>
-                                <li>Forensic Accounting</li>
-                                <li>SOX Compliance</li>
-                            </ul>
-                            <a href="#" class="btn btn-primary" data-section="contact">Get Started</a>
-                        </div>
-                        <div class="service-detail-image">
-                            <i class="fas fa-chart-bar"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="service-detail">
-                    <div class="service-detail-content">
-                        <div class="service-detail-text">
-                            <h3><i class="fas fa-lightbulb"></i> Advisory</h3>
-                            <p>Strategic consulting services that help organizations navigate complex business challenges and capitalize on opportunities.</p>
-                            <h4>Key Offerings:</h4>
-                            <ul>
-                                <li>Strategy Consulting</li>
-                                <li>Operational Excellence</li>
-                                <li>Mergers & Acquisitions</li>
-                                <li>Change Management</li>
-                                <li>Risk Management</li>
-                                <li>Performance Improvement</li>
-                            </ul>
-                            <a href="#" class="btn btn-primary" data-section="contact">Learn More</a>
-                        </div>
-                        <div class="service-detail-image">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="service-detail">
-                    <div class="service-detail-content">
-                        <div class="service-detail-text">
-                            <h3><i class="fas fa-calculator"></i> Tax Services</h3>
-                            <p>Comprehensive tax planning and compliance solutions designed to optimize your tax position while ensuring full compliance.</p>
-                            <h4>Key Offerings:</h4>
-                            <ul>
-                                <li>Corporate Tax Planning</li>
-                                <li>International Tax</li>
-                                <li>Transfer Pricing</li>
-                                <li>Tax Technology</li>
-                                <li>Indirect Tax (VAT/GST)</li>
-                                <li>Tax Controversy Support</li>
-                            </ul>
-                            <a href="#" class="btn btn-primary" data-section="contact">Consult Now</a>
-                        </div>
-                        <div class="service-detail-image">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="service-detail">
-                    <div class="service-detail-content">
-                        <div class="service-detail-text">
-                            <h3><i class="fas fa-laptop-code"></i> Digital Transformation</h3>
-                            <p>Leveraging cutting-edge technology to drive innovation, efficiency, and business growth in the digital age.</p>
-                            <h4>Key Offerings:</h4>
-                            <ul>
-                                <li>Digital Strategy</li>
-                                <li>Cloud Solutions</li>
-                                <li>Data Analytics & AI</li>
-                                <li>Cybersecurity</li>
-                                <li>Process Automation</li>
-                                <li>Technology Implementation</li>
-                            </ul>
-                            <a href="#" class="btn btn-primary" data-section="contact">Transform Now</a>
-                        </div>
-                        <div class="service-detail-image">
-                            <i class="fas fa-cogs"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- INDUSTRIES SECTION -->
-    <section id="industries-section" class="page-section section-hidden">
-        <div class="page-header">
-            <div class="container">
-                <h1>Industries We Serve</h1>
-                <p>Deep expertise across diverse sectors and markets worldwide</p>
-            </div>
-        </div>
-
-        <div class="industries-section section">
-            <div class="container">
-                <div class="industries-grid">
-                    <div class="industry-item hover-lift">
-                        <i class="fas fa-building"></i>
-                        <h4>Financial Services</h4>
-                        <p>Banking, Insurance, Capital Markets</p>
-                    </div>
-                    <div class="industry-item hover-lift">
-                        <i class="fas fa-industry"></i>
-                        <h4>Manufacturing</h4>
-                        <p>Automotive, Aerospace, Industrial Products</p>
-                    </div>
-                    <div class="industry-item hover-lift">
-                        <i class="fas fa-heartbeat"></i>
-                        <h4>Healthcare</h4>
-                        <p>Pharmaceuticals, Medical Devices, Healthcare Services</p>
-                    </div>
-                    <div class="industry-item hover-lift">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h4>Retail & Consumer</h4>
-                        <p>Retail, Consumer Products, Food & Beverage</p>
-                    </div>
-                    <div class="industry-item hover-lift">
-                        <i class="fas fa-microchip"></i>
-                        <h4>Technology</h4>
-                        <p>Software, Hardware, Telecommunications</p>
-                    </div>
-                    <div class="industry-item hover-lift">
-                        <i class="fas fa-bolt"></i>
-                        <h4>Energy & Utilities</h4>
-                        <p>Oil & Gas, Renewables, Power & Utilities</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- INSIGHTS SECTION -->
-    <section id="insights-section" class="page-section section-hidden">
-        <div class="page-header">
-            <div class="container">
-                <h1>Insights & Research</h1>
-                <p>Thought leadership and industry expertise to guide your decisions</p>
-            </div>
-        </div>
-
-        <div class="insights-section section">
-            <div class="container">
-                <div class="insights-grid">
-                    <div class="insight-card">
-                        <div class="insight-image">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="insight-content">
-                            <h4>Digital Transformation in 2024</h4>
-                            <p>How organizations are leveraging technology to drive innovation and growth in the post-pandemic world.</p>
-                            <p class="insight-date">March 15, 2024</p>
-                        </div>
-                    </div>
-                    <div class="insight-card">
-                        <div class="insight-image">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <div class="insight-content">
-                            <h4>Global Economic Outlook</h4>
-                            <p>Our latest analysis on global economic trends and their impact on business strategies.</p>
-                            <p class="insight-date">March 10, 2024</p>
-                        </div>
-                    </div>
-                    <div class="insight-card">
-                        <div class="insight-image">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="insight-content">
-                            <h4>Cybersecurity Best Practices</h4>
-                            <p>Essential cybersecurity measures for businesses in an increasingly digital landscape.</p>
-                            <p class="insight-date">March 5, 2024</p>
-                        </div>
-                    </div>
-                    <div class="insight-card">
-                        <div class="insight-image">
-                            <i class="fas fa-leaf"></i>
-                        </div>
-                        <div class="insight-content">
-                            <h4>Sustainability & ESG</h4>
-                            <p>The growing importance of environmental, social, and governance factors in business.</p>
-                            <p class="insight-date">February 28, 2024</p>
-                        </div>
-                    </div>
-                    <div class="insight-card">
-                        <div class="insight-image">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="insight-content">
-                            <h4>Future of Work</h4>
-                            <p>How remote work and digital collaboration are reshaping the modern workplace.</p>
-                            <p class="insight-date">February 20, 2024</p>
-                        </div>
-                    </div>
-                    <div class="insight-card">
-                        <div class="insight-image">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="insight-content">
-                            <h4>Tax Reform Updates</h4>
-                            <p>Latest updates on global tax regulations and their implications for multinational corporations.</p>
-                            <p class="insight-date">February 15, 2024</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CAREERS SECTION -->
-    <section id="careers-section" class="page-section section-hidden">
-        <div class="page-header">
-            <div class="container">
-                <h1>Careers at AMC</h1>
-                <p>Join our community of solvers and make a difference in the world</p>
-            </div>
-        </div>
-
-        <div class="careers-section section">
-            <div class="container">
-                <div class="about-content">
-                    <div class="about-text">
-                        <h2>Why Choose AMC?</h2>
-                        <p>At AMC, we believe in the power of our people to make a difference. We offer opportunities to work on challenging projects, develop your skills, and build a rewarding career.</p>
-                        
-                        <h3>What We Offer</h3>
-                        <ul class="values-list">
-                            <li><strong>Growth Opportunities:</strong> Continuous learning and professional development</li>
-                            <li><strong>Global Reach:</strong> Work with clients across the world</li>
-                            <li><strong>Diverse Environment:</strong> Inclusive workplace that values different perspectives</li>
-                            <li><strong>Work-Life Balance:</strong> Flexible working arrangements</li>
-                            <li><strong>Competitive Benefits:</strong> Comprehensive compensation and benefits package</li>
-                        </ul>
-                        
-                        <a href="#" class="btn btn-primary" data-section="contact">Apply Now</a>
-                    </div>
-                    <div class="about-image">
-                        <div class="image-placeholder hover-lift">
-                            <i class="fas fa-briefcase"></i>
-                            <p>Your Career Journey</p>
-                        </div>
-                    </div>
-                </div>
-
-                <h2 style="text-align: center; margin-top: 4rem; margin-bottom: 3rem;">Open Positions</h2>
-                <div class="insights-grid">
-                    <div class="insight-card">
-                        <div class="insight-content">
-                            <h4>Senior Consultant - Advisory</h4>
-                            <p>Join our advisory team to help clients navigate complex business challenges and drive transformation.</p>
-                            <p class="insight-date">Location: New York, NY</p>
-                            <a href="#" class="service-link" data-section="contact">Apply</a>
-                        </div>
-                    </div>
-                    <div class="insight-card">
-                        <div class="insight-content">
-                            <h4>Tax Manager - International</h4>
-                            <p>Lead international tax planning projects for multinational clients across various industries.</p>
-                            <p class="insight-date">Location: London, UK</p>
-                            <a href="#" class="service-link" data-section="contact">Apply</a>
-                        </div>
-                    </div>
-                    <div class="insight-card">
-                        <div class="insight-content">
-                            <h4>Digital Transformation Specialist</h4>
-                            <p>Help organizations leverage technology to drive innovation and operational excellence.</p>
-                            <p class="insight-date">Location: San Francisco, CA</p>
-                            <a href="#" class="service-link" data-section="contact">Apply</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section id="contact-section" class="page-section section-hidden">
-        <div class="page-header">
-            <div class="container">
-                <h1>Contact Us</h1>
-                <p>Get in touch with our experts to discuss how we can help your business</p>
-            </div>
-        </div>
-
-        <div class="contact-section section">
-            <div class="container">
-                <div class="contact-content">
-                    <div class="contact-info">
-                        <h2>Get in Touch</h2>
-                        <p>Ready to transform your business? Our experts are here to help you navigate complex challenges and unlock new opportunities.</p>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <h4>Global Headquarters</h4>
-                                <p>300 Madison Avenue<br>New York, NY 10017</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <h4>Phone</h4>
-                                <p>+1 (555) 123-4567</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <h4>Email</h4>
-                                <p>info@amc-consulting.com</p>
-                            </div>
-                        </div>
-
-                        <div class="contact-item">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <h4>Business Hours</h4>
-                                <p>Monday - Friday: 9:00 AM - 6:00 PM EST</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-form">
-                        <h3>Send us a Message</h3>
-                        <div id="contact-alert" class="alert"></div>
-                        <form id="contactForm">
-                            <div class="form-group">
-                                <label for="name">Full Name *</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="email">Email Address *</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
+                        <p>At AMC, our purpose is to
